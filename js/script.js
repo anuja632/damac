@@ -70,7 +70,7 @@ const swiper = new Swiper('.mySwiper', {
       navbar.classList.remove('scrolled');
     }
   });
-// Select all elements with class "contact"
+  // Select all elements with class "contact"
 const contactButtons = document.querySelectorAll('.contact');
 const popupForm = document.getElementById('popupForm');
 const closeBtn = document.querySelector('.close-btn');
@@ -95,9 +95,15 @@ window.addEventListener('click', (e) => {
   }
 });
 
-// Automatically open popup 5 minutes (300000 ms) after page load
+// Automatically open popup every 15 seconds
 window.addEventListener('load', () => {
+  // Initial popup after 15 seconds
   setTimeout(() => {
     popupForm.style.display = 'flex';
-  }, 300000); // 300000 ms = 5 minutes
+  }, 15000);
+
+  // Repeat every 15 seconds
+  setInterval(() => {
+    popupForm.style.display = 'flex';
+  }, 15000);
 });
