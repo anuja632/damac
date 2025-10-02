@@ -37,7 +37,7 @@ function setupClones() {
 
 // Move slider to current index
 function moveToSlide(transition = true) {
-  slidesWrapper.style.transition = transition ? 'transform 0.5s ease-in-out' : 'none';
+slidesWrapper.style.transition = transition ? 'transform 0.8s ease-in-out' : 'none';
   slidesWrapper.style.transform = `translateX(-${index * (100 / slidesPerView)}%)`;
 }
 
@@ -65,7 +65,7 @@ function goPrev() {
 }
 
 // Autoplay
-function startAutoplay() { autoplayInterval = setInterval(goNext, 3000); }
+function startAutoplay() { autoplayInterval = setInterval(goNext, 5000); } // 5s
 function stopAutoplay() { clearInterval(autoplayInterval); }
 function restartAutoplay() { stopAutoplay(); startAutoplay(); }
 
