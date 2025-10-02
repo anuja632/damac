@@ -1,52 +1,131 @@
-const swiper = new Swiper('.mySwiper', {
-  slidesPerView: 1,
-  spaceBetween: 20,
-  loop: true,
-  navigation: {
-    nextEl: '.swiper-button-next',
-    prevEl: '.swiper-button-prev',
-  },
-  autoplay: {
-    delay: 3000,
-    disableOnInteraction: false,
-  },
-  breakpoints: {
-    768: { slidesPerView: 1 },
-    992: { slidesPerView: 2 },
-    1200: { slidesPerView: 3 },
-  },
+const slidesWrapper = document.querySelector('.slides');
+const slideItems = document.querySelectorAll('.slide');
+const nextBtn = document.querySelector('.next');
+const prevBtn = document.querySelector('.prev');
+
+const slidesPerView = 3;
+let index = slidesPerView; // start from first real slide
+let autoplayInterval;
+
+// Clone first & last slides for infinite loop
+const totalSlides = slideItems.length;
+for (let i = 0; i < slidesPerView; i++) {
+  const firstClone = slideItems[i].cloneNode(true);
+  const lastClone = slideItems[totalSlides - 1 - i].cloneNode(true);
+  slidesWrapper.appendChild(firstClone);
+  slidesWrapper.insertBefore(lastClone, slidesWrapper.firstChild);
+}
+
+// Updated slides after cloning
+const allSlides = document.querySelectorAll('.slide');
+const totalClones = allSlides.length;
+
+// Set initial position
+slidesWrapper.style.transform = `translateX(-${index * (100 / slidesPerView)}%)`;
+
+function moveToSlide() {
+  slidesWrapper.style.transition = 'transform 0.5s ease-in-out';
+  slidesWrapper.style.transform = `translateX(-${index * (100 / slidesPerView)}%)`;
+}
+
+function goNext() {
+  index++;
+  moveToSlide();
+
+  // Reset if we reach end
+  if (index >= totalSlides + slidesPerView) {
+    setTimeout(() => {
+      slidesWrapper.style.transition = 'none';
+      index = slidesPerView;
+      slidesWrapper.style.transform = `translateX(-${index * (100 / slidesPerView)}%)`;
+    }, 500);
+  }
+}
+
+function goPrev() {
+  index--;
+  moveToSlide();
+
+  // Reset if we reach beginning
+  if (index < slidesPerView) {
+    setTimeout(() => {
+      slidesWrapper.style.transition = 'none';
+      index = totalSlides;
+      slidesWrapper.style.transform = `translateX(-${index * (100 / slidesPerView)}%)`;
+    }, 500);
+  }
+}
+
+// Button listeners
+nextBtn.addEventListener('click', () => {
+  goNext();
+  restartAutoplay();
 });
 
+prevBtn.addEventListener('click', () => {
+  goPrev();
+  restartAutoplay();
+});
 
-  const video = document.getElementById('video');
-  const playBtn = document.getElementById('playBtn');
-  const container = document.getElementById('videoContainer');
+// Autoplay
+function startAutoplay() {
+  autoplayInterval = setInterval(goNext, 3000); // every 3 seconds
+}
 
-  playBtn.addEventListener('click', () => {
-    if(video.paused) {
-      video.play();
-      container.classList.add('playing');
-    } else {
-      video.pause();
-      container.classList.remove('playing');
-    }
-  });
+function stopAutoplay() {
+  clearInterval(autoplayInterval);
+}
 
-  // Pause video if clicked on video itself
-  video.addEventListener('click', () => {
-    if(video.paused) {
-      video.play();
-      container.classList.add('playing');
-    } else {
-      video.pause();
-      container.classList.remove('playing');
-    }
-  });
+function restartAutoplay() {
+  stopAutoplay();
+  startAutoplay();
+}
 
-  // Show play button when video ends
-  video.addEventListener('ended', () => {
+// Start autoplay on load
+startAutoplay();
+
+// Optional: Pause autoplay on hover
+const sliderContainer = document.querySelector('.slider-container');
+sliderContainer.addEventListener('mouseenter', stopAutoplay);
+sliderContainer.addEventListener('mouseleave', startAutoplay);
+
+
+
+
+
+
+const video = document.getElementById('video');
+const playBtn = document.getElementById('playBtn');
+const playIcon = document.getElementById('playIcon');
+const container = document.getElementById('videoContainer');
+
+function togglePlay() {
+  if (video.paused) {
+    video.play();
+    container.classList.add('playing');
+    playIcon.classList.remove('fa-play');
+    playIcon.classList.add('fa-pause');
+  } else {
+    video.pause();
     container.classList.remove('playing');
-  });
+    playIcon.classList.remove('fa-pause');
+    playIcon.classList.add('fa-play');
+  }
+}
+
+// Click on button
+playBtn.addEventListener('click', togglePlay);
+
+// Click on video itself
+video.addEventListener('click', togglePlay);
+
+// Reset icon when video ends
+video.addEventListener('ended', () => {
+  container.classList.remove('playing');
+  playIcon.classList.remove('fa-pause');
+  playIcon.classList.add('fa-play');
+});
+
     const hero = document.getElementById("hero");
   const bottomBanner = document.getElementById("bottomBanner");
 

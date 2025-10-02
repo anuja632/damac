@@ -16,6 +16,7 @@
 
 <link rel="stylesheet" href="./css/style.css">
 
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
 
 
   <!-- Swiper CSS -->
@@ -31,12 +32,12 @@
   <!-- Hero Section -->
   <section class="hero" id="hero">
     <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-transparent position-absolute  w-100 top-0">
+<nav class="navbar navbar-expand-lg navbar-dark position-absolute  w-100 top-0">
   <div class="container-fluid py-1">
 
     <!-- Logo Left -->
     <a class="navbar-brand" href="#">
-      <img src="./image/logo.jpg" alt="High Gain Logo" height="60">
+      <img src="./image/logo1.png" alt="High Gain Logo" height="60">
     </a>
 
     <!-- Mobile toggle (white icon) -->
@@ -53,8 +54,10 @@
         <li class="nav-item"><a class="nav-link" href="#Amenities">Amenities</a></li>
         <li class="nav-item"><a class="nav-link" href="#Residences">Residences</a></li>
         <li class="nav-item"><a class="nav-link" href="#Visual Tour">Visual Tour</a></li>
-        <li class="nav-item"><a class="nav-link" href="#Book Consultation">Book Consultation</a></li>
+        <!-- <li class="nav-item"><a class="nav-link" href="#Book Consultation">Book Consultation</a></li> -->
       </ul>
+            <a href="#BookConsultation"  class="btn-yellows">Book Consultation</a>
+
     </div>
   </div>
 </nav>
@@ -72,34 +75,37 @@
     </div>
   </section>
 
-  
-  <section class="luxury-section" id="about">
+<section class="luxury-section py-5" id="about">
+  <div class="container">
+    <div class="row align-items-center">
+      
+      <!-- Image -->
+      <div class="col-lg-8 mb-4 mb-lg-0">
+        <img src="https://www.highgainrealestate.com/image/about.webp" class="highgain-img" alt="Waterfront Dining">
+      </div>
 
-    <!-- Image + Text -->
-    <div class="content">
-      <img src="./image/about.png" alt="Waterfront Dining" id="aa">
-
-      <div class="text-box">
-        <h2>WHERE LUXURY EMBRACES PARADISE</h2>
-        <p>
-          DAMAC Islands Phase 2 unveils a rare opportunity to own ultra-luxury beachfront townhouses in the heart of Dubailand. After the sell-out success of Phase 1, this exclusive release introduces limited 4- and 5-bedroom residences, starting from AED 2.6M, with handover scheduled for 2029. Designed with discerning families in mind, these homes combine contemporary architecture, open layouts, and premium finishes to deliver a lifestyle of sophistication and comfort.
+      <!-- Text -->
+      <div class="col-lg-4">
+        <h2 class="text-center text-lg-start mb-4" style="font-family: 'Libre Baskerville', serif; color:#7a1c28;">
+          WHERE LUXURY EMBRACES PARADISE
+        </h2>
+        <p class="mb-3" style="font-family: 'Chronicle Display Light'; font-size:16px; line-height:25px; text-align:justify; color:black;">
+          DAMAC Islands Phase 2 introduces a limited collection of 4- and 5-bedroom beachfront townhouses in Dubailand, starting from AED 2.6M with handover in 2029. Designed for modern families, these residences feature contemporary architecture, open layouts, and premium finishes that blend elegance with comfort.
         </p>
-        <p>
-          Set against serene waterfront views and surrounded by lush green landscapes, the community is thoughtfully master-planned to inspire leisure, wellness, and togetherness. World-class amenities including infinity pools, fitness centers, landscaped parks, and vibrant retail promenades ensure that residents experience the perfect balance of relaxation, activity, and convenience—all within a secure and private environment.
-        </p>
-        <p>
-          With its prime beachfront location and excellent connectivity to Dubai’s major hubs, DAMAC Islands Phase 2 offers not just a luxurious lifestyle but also exceptional investment potential. Limited supply, growing demand for waterfront living, and the prestige of a DAMAC address make this community one of Dubailand’s most sought-after destinations—where exclusivity, luxury, and family living converge.
+        <p class="mb-4" style="font-family: 'Chronicle Display Light'; font-size:16px; line-height:25px; text-align:justify; color:black;">
+          Set amidst tranquil waterfronts and lush greenery, the community offers world-class amenities including infinity pools, fitness centers, landscaped parks, and vibrant retail spaces. With its prime location and excellent connectivity to Dubai’s key hubs, Phase 2 combines luxury living with strong investment potential.
         </p>
 
-        <!-- Bottom button -->
-        <div class="bottom-btn">
-                <br>
-
-          <a href="#contact"   class="btn-yellow contact">REGISTER INTEREST</a>
+        <!-- Button -->
+        <div class="text-center text-lg-start">
+          <a href="#contact" class="btn btn-warning text-dark rounded-pill px-4 py-2 fw-bold" style="font-family:'Chronicle Display Light';">
+            REGISTER INTEREST
+          </a>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
   <section class="amenities-section" id="Amenities">
      <div class="container">
@@ -165,51 +171,58 @@
     </div>
   </div>
 </section>
-<div class="container" id="Residences">
-  <div class="swiper mySwiper"> 
-    <div class="slider-header">
-      <h2>DISCOVER OUR SIGNATURE RESIDENCES</h2>
-       <div class="swiper-buttons">
-      <div class="swiper-button-prev"><i class="fa-solid fa-arrow-left"></i></div>
-      <div class="swiper-button-next"><i class="fa-solid fa-arrow-right"></i></div>
+<div class="slider-container">
+  <div class="slider-header">
+    <h2>DISCOVER OUR SIGNATURE RESIDENCES</h2>
+    <div class="custom-arrows">
+      <button class="arrow prev">&#10094;</button>
+      <button class="arrow next">&#10095;</button>
     </div>
-    </div>
-  
-    <div class="swiper-wrapper">
-      <div class="swiper-slide">
+  </div>
+
+  <div class="slider">
+    <div class="slides">
+      <!-- Slide 1 -->
+      <div class="slide">
         <img src="./image/4vila.webp" alt="4 BR Townhouse">
         <div class="slide-footer">
-          <div class="slide-title">4 BR TOWNHOUSE</div>
-                    <a class="btn-yellow contact">Enquire Now</a>
-
-          <!-- <button class="download-btn"></button> -->
+          <div class="slide-title">4 BR Townhouse</div>
+          <a class="btn-yellow contact">Enquire Now</a>
         </div>
       </div>
-      <div class="swiper-slide">
+
+      <!-- Slide 2 -->
+      <div class="slide">
         <img src="./image/5vila.webp" alt="5 BR Townhouse">
         <div class="slide-footer">
-          <div class="slide-title">5 BR TOWNHOUSE</div>
-                    <a  class="btn-yellow contact">Enquire Now</a>
+          <div class="slide-title">5 BR Townhouse</div>
+          <a class="btn-yellow contact">Enquire Now</a>
         </div>
       </div>
-      <div class="swiper-slide">
+
+      <!-- Slide 3 -->
+      <div class="slide">
         <img src="./image/6vila.webp" alt="6 BR Villa">
         <div class="slide-footer">
-          <div class="slide-title">6 BR VILLA</div>
-                    <a  class="btn-yellow contact">Enquire Now</a>
+          <div class="slide-title">6 BR Villa</div>
+          <a class="btn-yellow contact">Enquire Now</a>
         </div>
       </div>
-      <div class="swiper-slide">
-        <img src="./image/7vila.webp" alt="7 BR Penthouse">
+
+      <!-- Slide 4 -->
+      <div class="slide">
+        <img src="./image/7vila.webp" alt="7 BR Villa">
         <div class="slide-footer">
-          <div class="slide-title">7 BR PENTHOUSE</div>
-                    <a  class="btn-yellow contact">Enquire Now </a>
+          <div class="slide-title">7 BR Villa</div>
+          <a class="btn-yellow contact">Enquire Now</a>
         </div>
       </div>
     </div>
   </div>
-
 </div>
+
+
+
 <div class="container" id="Visual Tour">
   <h2 class="text-center my-4">Life at DAMAC in Pictures</h2>
 
@@ -246,35 +259,74 @@
 <div class="video-container" id="videoContainer">
   <video id="video" src="./image/video.mp4"></video>
   <div class="play-btn" id="playBtn">
-    <i class="fas fa-play"></i>
+    <i class="fas fa-play" id="playIcon"></i>
   </div>
 </div>
+
 
 <section class="location-section container">
   <div class="row align-items-center">
     <!-- Left Image (col-8) -->
     <div class="col-lg-7 location-image mb-4 mb-lg-0">
-      <img src="./image/map.png" alt="Location Image" class="img-fluid rounded">
+      <img src="https://damacdxb.com/wp-content/uploads/2025/09/Damac-Islands-Map-copy-1536x979.jpg" alt="Location Image" class="img-fluid rounded">
     </div>
 
     <!-- Right Text (col-4) -->
-    <div class="col-lg-5 location-text">
-      <h2>LOCATION</h2>
-      <h4>Where Convenience Meets Connectivity</h4>
-      <p>Strategically Located in Dubailand <br> 30 Million Sq.Ft of Possibilities</p>
-      <ul class="list-unstyled">
-        <li><img src="./image/Vector.png" alt="Pin" width="20" style="margin-right:10px;">30 Million Sq.Ft of Possibilities</li>
-        <li><img src="./image/Vector.png" alt="Pin" width="20" style="margin-right:10px;">15 mins to Sports City, Motor City & Dubai Hills (DH1)</li>
-        <li><img src="./image/Vector.png" alt="Pin" width="20" style="margin-right:10px;">15 mins to Expo 2020 Site</li>
-        <li><img src="./image/Vector.png" alt="Pin" width="20" style="margin-right:10px;">18 mins to Dubai Investment Park</li>
-        <li><img src="./image/Vector.png" alt="Pin" width="20" style="margin-right:10px;">23 mins to Al Maktoum International Airport</li>
-        <li><img src="./image/Vector.png" alt="Pin" width="20" style="margin-right:10px;">28 mins to Dubai International Airport</li>
-        <li><img src="./image/Vector.png" alt="Pin" width="20" style="margin-right:10px;">30 mins to Burj Al Arab</li>
-        <li><img src="./image/Vector.png" alt="Pin" width="20" style="margin-right:10px;">30 mins to Dubai Downtown</li>
-      </ul>
-      <br>
-          <a href="#contact"  class="btn-yellow mt-3 contact">REGISTER INTEREST</a>
-    </div>
+ <div class="col-lg-5 location-text">
+  <h2>LOCATION</h2>
+  <h4>Where Convenience Meets Connectivity</h4>
+  <p>Strategically Located in Dubailand</p>
+
+  <!-- New Location List with Font Awesome icons -->
+  <div class="location-list">
+    <ul style="list-style: none; padding: 0; margin: 0;">
+      <li style="margin-bottom: 12px;">
+        <i class="fas fa-map-marker-alt" style="margin-right: 8px;"></i>
+        <strong style="margin-right: 8px;">Trump International Golf Club</strong><br>
+        <span>5 mins</span>
+      </li>
+      <li style="margin-bottom: 12px;">
+        <i class="fas fa-map-marker-alt" style="margin-right: 8px;"></i>
+        <strong style="margin-right: 8px;">Dubai Sports City</strong><br>
+        <span>10 mins</span>
+      </li>
+      <li style="margin-bottom: 12px;">
+        <i class="fas fa-map-marker-alt" style="margin-right: 8px;"></i>
+        <strong style="margin-right: 8px;">Expo 2020 Venue</strong><br>
+        <span>15 mins</span>
+      </li>
+      <li style="margin-bottom: 12px;">
+        <i class="fas fa-map-marker-alt" style="margin-right: 8px;"></i>
+        <strong style="margin-right: 8px;">Dubai Autodrome</strong><br>
+        <span>10 mins</span>
+      </li>
+      <li style="margin-bottom: 12px;">
+        <i class="fas fa-map-marker-alt" style="margin-right: 8px;"></i>
+        <strong style="margin-right: 8px;">Dubai Butterfly Garden</strong><br>
+        <span>10 mins</span>
+      </li>
+      <li style="margin-bottom: 12px;">
+        <i class="fas fa-map-marker-alt" style="margin-right: 8px;"></i>
+        <strong style="margin-right: 8px;">Dubai Marina</strong><br>
+        <span>15 mins</span>
+      </li>
+      <li style="margin-bottom: 12px;">
+        <i class="fas fa-map-marker-alt" style="margin-right: 8px;"></i>
+        <strong style="margin-right: 8px;">DXB Airport</strong><br>
+        <span>28 mins</span>
+      </li>
+      <li>
+        <i class="fas fa-map-marker-alt" style="margin-right: 8px;"></i>
+        <strong style="margin-right: 8px;">Palm Jumeirah</strong><br>
+        <span>22 mins</span>
+      </li>
+    </ul>
+  </div>
+
+  <br>
+  <a href="#contact" class="btn-yellow mt-3 contact">REGISTER INTEREST</a>
+</div>
+
   </div>
 </section>
 
@@ -387,15 +439,15 @@
     </form>
   </div>
 
+
+
+</section>
   <!-- Floating Social Icons -->
 <div class="social-icons">
   <a href="tel:+971508364706" class="phone" title="Call us"><i class="fa-solid fa-phone"></i></a>
   <a href="https://wa.me/+918838669595" class="whatsapp" target="_blank" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
   <a href="mailto:amir@highgainrealestate.com" class="email" title="Email"><i class="fa-solid fa-envelope"></i></a>
 </div>
-
-</section>
-
 <div class="bottom-banner" id="bottomBanner">
   <div class="d-flex align-items-center justify-content-between w-100 flex-wrap">
     <img src="./image/damac.png" alt="Damac" height="40" class="me-3">
