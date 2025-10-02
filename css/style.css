@@ -292,11 +292,10 @@ a.btns {
 .btn-yellow:hover {
   background: #d99a00;
 }
-
-.btn-yellows {
-  --clr-font-main: #7B1E3C;
-  --btn-bg-1: #f7b500;
-  --btn-bg-2: #ffcc33; /* slightly lighter yellow for gradient */
+.btn-youtubes {
+  --clr-font-main: #fff;          /* White text */
+  --btn-bg-1: #FF0000;            /* YouTube red */
+  --btn-bg-2: #CC0000;            /* Slightly darker red for gradient */
   --btn-bg-color: #fff;
   --radii: 30px;
 
@@ -320,17 +319,17 @@ a.btns {
   border-radius: var(--radii);
   color: var(--clr-font-main);
   box-shadow:
-    0px 0px 20px rgba(247, 181, 0, 0.5),        /* outer glow */
-    0px 5px 5px -1px rgba(247, 140, 0, 0.25),   /* subtle shadow */
-    inset 4px 4px 8px rgba(255, 222, 100, 0.5), /* inner light */
-    inset -4px -4px 8px rgba(200, 140, 0, 0.35); /* inner shadow */
+    0px 0px 20px rgba(255, 0, 0, 0.5),         /* outer glow */
+    0px 5px 5px -1px rgba(204, 0, 0, 0.25),    /* subtle shadow */
+    inset 4px 4px 8px rgba(255, 100, 100, 0.5),/* inner light */
+    inset -4px -4px 8px rgba(153, 0, 0, 0.35); /* inner shadow */
 }
 
-.btn-yellows:hover {
+.btn-youtubes:hover {
   background-position: right top;
 }
 
-.btn-yellows:is(:focus, :focus-visible, :active) {
+.btn-youtubes:is(:focus, :focus-visible, :active) {
   outline: none;
   box-shadow:
     0 0 0 3px var(--btn-bg-color),
@@ -338,19 +337,16 @@ a.btns {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .btn-yellows {
+  .btn-youtubes {
     transition: linear;
   }
 }
 
-
 #register-interest {
   position: relative;
-  background: #f7b500;       /* yellow background */
-  color: #7B1E3C;            /* dark red text */
-  /* font-family: "Poppins", sans-serif; */
-            font-family: "Chronicle Display Light";
-
+  background: #FF0000;       /* YouTube red background */
+  color: #FFFFFF;            /* white text */
+  font-family: "Chronicle Display Light";
   font-weight: bold;
   text-transform: uppercase;
   border: none;
@@ -366,17 +362,17 @@ a.btns {
 
 /* Hover effect */
 #register-interest:hover {
-  background: #ffcd3c;
+  background: #CC0000;       /* slightly darker red on hover */
   transform: scale(1.05);
 }
 
-/* Small dark red bubbles */
+/* Small white bubbles */
 #register-interest::before,
 #register-interest::after {
   content: "";
   position: absolute;
   border-radius: 50%;
-  background: #7B1E3C;        /* bubble color */
+  background: #FFFFFF;        /* bubble color changed to white */
   pointer-events: none;
 }
 
@@ -953,6 +949,8 @@ video {
         grid-template-columns: 1fr;
       }
     }
+
+
 /* Hero Section */
 .hero-section {
   background: url('../image/footer.png') no-repeat center center/cover;
@@ -983,6 +981,31 @@ video {
   font-weight: 600;
   color: #fff;
 }
+.intl-tel-input {
+  width: 100%;
+}
+.intl-tel-input input {
+  border-radius: 50px !important;
+  padding: 12px 20px !important;
+  background: transparent !important;
+  color: #fff !important;
+  border: 3px solid #fff !important;
+}
+.iti__country-list {
+    position: absolute;
+    z-index: 2;
+    list-style: none;
+    text-align: left;
+    padding: 0;
+    margin: 0 0 0 -1px;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+    background-color: black !important;
+    border: 1px solid #CCC;
+    white-space: nowrap;
+    max-height: 200px;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+}
 
 /* Input Fields */
 .form-control {
@@ -999,6 +1022,12 @@ video {
 .form-control::placeholder {
   color: #fff;
 }
+.form-control:hover {
+  background-color: #fff;
+  color: #000 !important; /* make text black */
+  border-color: #000; /* optional, for visible border */
+}
+
 
 /* Submit Button */
 .btn-submit {
@@ -1011,7 +1040,6 @@ video {
   border: none;
   cursor: pointer;
 }
-
 /* Floating Social Icons */
 .social-icons {
   position: fixed;
@@ -1024,9 +1052,10 @@ video {
   z-index: 10; /* ensures icons stay above background */
 }
 
+/* Icon Styles */
 .social-icons a {
-  width: 45px;
-  height: 45px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -1035,6 +1064,9 @@ video {
   color: #fff;
   transition: all 0.3s ease;
   text-decoration: none;
+
+  /* Floating Animation */
+  animation: float 3s ease-in-out infinite;
 }
 
 /* Individual Icon Colors */
@@ -1053,9 +1085,22 @@ video {
 
 /* Hover Effects */
 .social-icons a:hover {
-  transform: scale(1.1);
+  transform: scale(1.2);
   opacity: 0.9;
 }
+
+/* Floating Animation Keyframes */
+@keyframes float {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+}
+
+/* Optional: different delay for each icon for a staggered effect */
+.social-icons a.phone { animation-delay: 0s; }
+.social-icons a.whatsapp { animation-delay: 0.2s; }
+.social-icons a.email { animation-delay: 0.4s; }
+
 
 /* Responsive: Move icons horizontally on smaller screens */
 @media screen and (max-width: 768px) {

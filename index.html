@@ -18,6 +18,7 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css" />
 
   <!-- Swiper CSS -->
   <link
@@ -36,7 +37,7 @@
   <div class="container-fluid py-1">
 
     <!-- Logo Left -->
-    <a class="navbar-brand" href="#">
+    <a class="navbar-brand" href="https://highgainrealestate.com/">
       <img src="./image/logo1.png" alt="High Gain Logo" height="60">
     </a>
 
@@ -49,14 +50,14 @@
     <!-- Nav Links Right -->
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
       <ul class="navbar-nav ">
-        <li class="nav-item"><a class="nav-link" href="https://highgainrealestate.com/">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
         <li class="nav-item"><a class="nav-link" href="#about">Overview</a></li>
         <li class="nav-item"><a class="nav-link" href="#Amenities">Amenities</a></li>
         <li class="nav-item"><a class="nav-link" href="#Residences">Residences</a></li>
         <li class="nav-item"><a class="nav-link" href="#Visual Tour">Visual Tour</a></li>
         <!-- <li class="nav-item"><a class="nav-link" href="#Book Consultation">Book Consultation</a></li> -->
       </ul>
-            <a href="#BookConsultation"  class="btn-yellows">Book Consultation</a>
+            <a href="#BookConsultation"  class="btn-youtubes">Book Consultation</a>
 
     </div>
   </div>
@@ -66,7 +67,7 @@
     <!-- Hero Content -->
     <div class="hero-content">
       <h1>WELCOME TO DAMAC ISLAND – YOUR OWN ISLAND PARADISE IN DUBAI</h1>
-<a href="tel:+971508364706" class="btns">SCHEDULE A CALL</a>
+<a href="tel:+971508364706" class="btns  contact">SCHEDULE A CALL</a>
     </div>
 
     <!-- Down Arrow -->
@@ -98,7 +99,7 @@
 
         <!-- Button -->
         <div class="text-center text-lg-start">
-          <a href="#contact" class="btn btn-warning text-dark rounded-pill px-4 py-2 fw-bold" style="font-family:'Chronicle Display Light';">
+          <a  class="btn-yellow contact " style="font-family:'Chronicle Display Light';">
             REGISTER INTEREST
           </a>
         </div>
@@ -332,7 +333,7 @@
 
 
 <!-- Trigger Button -->
-<a href="#contact" id="contact" class="btn-submit">Contact Us</a>
+<!-- <a href="#contact" id="contact" class="btn-submit">Contact Us</a> -->
 
 <!-- Popup Form -->
 <div id="popupForm" class="popup-form">
@@ -407,7 +408,7 @@
 
 </div>
 <!-- Hero Section with Form -->
-<section class="hero-section" id="Book Consultation">
+<section class="hero-section" id="BookConsultation">
   <div class="form-box">
     <h2>CONNECT WITH OUR PROPERTY EXPERTS</h2>
     <form action="https://formsubmit.co/amir@highgainrealestate.com" method="POST" id="contactfrm">
@@ -416,32 +417,43 @@
       <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="_subject" value="New Inquiry from Website">
       <input type="hidden" name="_template" value="table">
-            <input type="hidden" name="_next" value="thankyou.html"> <!-- Redirect after submission -->
-
+      <input type="hidden" name="_next" value="thankyou.html"> <!-- Redirect after submission -->
 
       <div class="row g-3">
+        <!-- First Name (still required) -->
         <div class="col-md-6">
           <input type="text" name="first_name" class="form-control" placeholder="First Name*" required>
         </div>
+
+        <!-- Last Name (optional) -->
         <div class="col-md-6">
-          <input type="text" name="last_name" class="form-control" placeholder="Last Name*" required>
+          <input type="text" name="last_name" class="form-control" placeholder="Last Name">
         </div>
+
+        <!-- Email (optional) -->
         <div class="col-12">
-          <input type="email" name="email" class="form-control" placeholder="Email*" required>
+          <input type="email" name="email" class="form-control" placeholder="Email">
         </div>
-        <div class="col-12">
-          <input type="tel" name="phone" class="form-control" placeholder="Phone Number*" required>
+
+        <!-- Phone Number (international) -->
+        <div class="col-md-6">
+<input type="tel" id="phone" name="phone" class="form-control" placeholder="Phone Number*" required>
         </div>
+
+        <!-- Location -->
+        <div class="col-md-6">
+          <input type="text" name="location" class="form-control" placeholder="Location*">
+        </div>
+
+        <!-- Submit Button -->
         <div class="col-12">
           <button type="submit" class="btn-submit">Submit</button>
         </div>
       </div>
     </form>
   </div>
-
-
-
 </section>
+
   <!-- Floating Social Icons -->
 <div class="social-icons">
   <a href="tel:+971508364706" class="phone" title="Call us"><i class="fa-solid fa-phone"></i></a>
@@ -471,6 +483,21 @@
 </div>
 
 
+<!-- intl-tel-input JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
+
+<!-- Inline initialization -->
+<script>
+
+
+  // Initialize intl-tel-input
+  const input = document.querySelector("#phone");
+  window.intlTelInput(input, {
+    initialCountry: "ae", // UAE
+    separateDialCode: true,
+    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js"
+  });
+</script>
 
 
  <!-- Bootstrap JS -->
