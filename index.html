@@ -172,7 +172,8 @@
     </div>
   </div>
 </section>
-<div class="slider-container">
+
+<div class="slider-container" id="Residences">
   <div class="slider-header">
     <h2>DISCOVER OUR SIGNATURE RESIDENCES</h2>
     <div class="custom-arrows">
@@ -357,11 +358,18 @@
         <input type="text" name="first_name" placeholder="First Name*" required>
         <input type="text" name="last_name" placeholder="Last Name*" required>
         <input type="email" name="email" placeholder="Email*" required>
-        <input type="tel" name="phone" placeholder="Phone Number*" required>
-        <button type="submit" class="btn-yellow">Submit</button>
-      </form>
+<input type="tel" name="phone" class="form-control phone" placeholder="Phone Number*" required>
+
+<!-- Add a wrapper div if needed -->
+  <div class="submit-wrapper">
+    <button type="submit" class="btn-yellow" id="ap">Submit</button>
+  </div>      </form>
     </div>
   </div>
+</div>
+<!-- Add a placeholder for success message -->
+<div id="formMessage" style="display:none; color:green; margin-top:10px; font-weight:600;">
+  Thank you! We’ll get back to you soon.
 </div>
 
 <div class="banner"></div>
@@ -437,7 +445,7 @@
 
         <!-- Phone Number (international) -->
         <div class="col-md-6">
-<input type="tel" id="phone" name="phone" class="form-control" placeholder="Phone Number*" required>
+          <input type="tel"  name="phone" class="form-control phone" placeholder="Phone Number*" required>
         </div>
 
         <!-- Location -->
@@ -456,7 +464,7 @@
 
   <!-- Floating Social Icons -->
 <div class="social-icons">
-  <a href="tel:+971508364706" class="phone" title="Call us"><i class="fa-solid fa-phone"></i></a>
+  <a href="tel:+971508364706" id="phone" title="Call us"><i class="fa-solid fa-phone"></i></a>
   <a href="https://wa.me/+918838669595" class="whatsapp" target="_blank" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
   <a href="mailto:amir@highgainrealestate.com" class="email" title="Email"><i class="fa-solid fa-envelope"></i></a>
 </div>
@@ -486,17 +494,53 @@
 <!-- intl-tel-input JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
 
-<!-- Inline initialization -->
 <script>
+// ----- Popup logic -----
+const contactButtons = document.querySelectorAll('.contact'); // buttons that open popup
+const popupForm = document.getElementById('popupForm');
+const closeBtn = document.querySelector('.close-btn');
 
+contactButtons.forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.preventDefault();
+    popupForm.style.display = 'flex';
+  });
+});
+closeBtn.addEventListener('click', () => popupForm.style.display = 'none');
+window.addEventListener('click', e => { if(e.target === popupForm) popupForm.style.display = 'none'; });
 
-  // Initialize intl-tel-input
-  const input = document.querySelector("#phone");
-  window.intlTelInput(input, {
-    initialCountry: "ae", // UAE
+// Auto popup every 15 seconds
+window.addEventListener('load', () => {
+  setTimeout(() => popupForm.style.display = 'flex', 15000);
+  setInterval(() => popupForm.style.display = 'flex', 15000);
+});
+
+// ----- Initialize intl-tel-input for all phone inputs -----
+const phoneInputs = document.querySelectorAll('.phone');
+phoneInputs.forEach(input => {
+  const iti = window.intlTelInput(input, {
+    initialCountry: "ae",
     separateDialCode: true,
     utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js"
   });
+
+  // Validate phone & redirect on submit
+  input.form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    // Update phone value
+    if(iti.isValidNumber()) {
+      input.value = iti.getNumber();
+    }
+
+    // Alert and redirect
+    alert("Thank you! We’ll get back to you soon.");
+    window.location.href = "thankyou.html";
+
+    // Optionally submit form to FormSubmit
+    // input.form.submit();
+  });
+});
 </script>
 
 

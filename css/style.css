@@ -677,6 +677,66 @@ a.btns {
   object-fit: cover;
   border-radius: 10px;
 }
+/* Tablet: 2 slides per view */
+@media (max-width: 992px) {
+  .slide {
+    min-width: 50%; /* 2 slides per view */
+  }
+}
+
+/* Mobile: 1 slide per view */
+@media (max-width: 600px) {
+  .slide {
+    min-width: 100%; /* 1 slide per view */
+  }
+
+  .slide img {
+    height: 200px; /* adjust height for smaller screens */
+  }
+
+  .slider-header h2 {
+    font-size: 20px;
+  }
+
+  .custom-arrows {
+    gap: 5px;
+    top: -5px;
+    right: 5px;
+  }
+
+  .arrow {
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+  }
+}
+@media (max-width: 550px) {
+  .slider-header {
+    flex-direction: column;       /* stack heading and arrows */
+    align-items: flex-start;      /* align to left */
+    gap: 10px;                    /* spacing between heading and arrows */
+    padding: 0 10px;
+  }
+
+  .slider-header h2 {
+    font-size: 18px;              /* smaller font */
+    line-height: 1.2;
+  }
+
+  .custom-arrows {
+    position: static;             /* remove absolute positioning */
+    display: flex;
+    gap: 8px;
+  }
+
+  .arrow {
+    width: 28px;                  /* smaller buttons */
+    height: 28px;
+    font-size: 16px;
+    border-width: 1.5px;
+  }
+}
+
 
 .btn-nav {
   background: #7a1c28; /* main color */
@@ -724,7 +784,7 @@ img:hover {
   .medium-img,
   .small-img {
     width: 100% !important;
-    height: auto;
+    height: 350px;
   }
 }
 
@@ -981,6 +1041,23 @@ video {
   font-weight: 600;
   color: #fff;
 }
+/* Target popup form only */
+#popupForm .iti__country-list {
+    position: absolute;
+    z-index: 2;
+    list-style: none;
+    text-align: left;
+    padding: 0;
+    margin: 0 0 0 -1px;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+    background-color: white !important;
+    border: 1px solid #CCC;
+    white-space: nowrap;
+    max-height: 200px;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+}
+
 .intl-tel-input {
   width: 100%;
 }
@@ -1070,7 +1147,7 @@ video {
 }
 
 /* Individual Icon Colors */
-.social-icons a.phone {
+.social-icons a#phone {
   background: #0088BB;
 }
 
@@ -1329,7 +1406,7 @@ video {
   border-left: none;
 }
 
-
+#ap{margin-top: 20px;}
 /* Responsive Adjustments */
 
 /* ≤1080px: wrap features and button vertically if needed */
@@ -1396,12 +1473,15 @@ video {
         background: rgba(0, 0, 0, 0.6);
         padding: 51px;
         border-radius: 20px;
-        width: 90%;
+        width: 100%;
         max-width: 800px;
         text-align: center;
         color: #fff;
         box-sizing: border-box;
-        margin-bottom: 120%;
+        margin-bottom: 0% !important;
+    }
+    .bottom-banner{
+      display: none;
     }
 }
 
@@ -1505,3 +1585,67 @@ video {
 }
 
 
+@media screen and (max-width: 550px) {
+  /* Make popup content vertical */
+  .split-popup {
+    flex-direction: column;
+    width: 95%;
+    max-width: 400px;
+  }
+
+  /* Image at the top */
+  .popup-image {
+    width: 100%;
+    height: 180px;
+  }
+
+  .popup-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .popup-form h2{
+    font-size: 18px;
+  }
+
+  /* Right form padding smaller */
+  .popup-form-right {
+    padding: 20px 15px;
+  }
+
+  /* Inputs full width and larger padding */
+  .popup-form-right input {
+    padding: 14px 18px;
+    font-size: 16px;
+    margin: 8px 0;
+  }
+
+  /* Submit button full width with larger tap area */
+  .popup-form-right .btn-submit,
+  .popup-form-right .btn-yellow {
+    padding: 14px;
+    font-size: 16px;
+  }
+
+  /* Close button smaller and easier to tap */
+  .close-btn {
+    font-size: 24px;
+    top: 10px;
+    right: 15px;
+  }
+  .hero-content h1 {
+    font-size: 34px;
+    max-width: 900px;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+.navbar-nav ul{
+      margin-bottom: 17px;
+
+}
+.navbar-collapse {
+        background: rgba(0, 0, 0, 0.85);
+        height: 280px;
+    }
+}

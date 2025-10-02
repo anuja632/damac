@@ -3,41 +3,52 @@ const slideItems = document.querySelectorAll('.slide');
 const nextBtn = document.querySelector('.next');
 const prevBtn = document.querySelector('.prev');
 
-const slidesPerView = 3;
-let index = slidesPerView; // start from first real slide
+let slidesPerView = updateSlidesPerView();
+let index = slidesPerView;
 let autoplayInterval;
 
-// Clone first & last slides for infinite loop
-const totalSlides = slideItems.length;
-for (let i = 0; i < slidesPerView; i++) {
-  const firstClone = slideItems[i].cloneNode(true);
-  const lastClone = slideItems[totalSlides - 1 - i].cloneNode(true);
-  slidesWrapper.appendChild(firstClone);
-  slidesWrapper.insertBefore(lastClone, slidesWrapper.firstChild);
+// Function to get slidesPerView based on screen width
+function updateSlidesPerView() {
+  if (window.innerWidth <= 600) return 1;
+  if (window.innerWidth <= 992) return 2;
+  return 3;
 }
 
-// Updated slides after cloning
-const allSlides = document.querySelectorAll('.slide');
-const totalClones = allSlides.length;
+// Clone slides for infinite loop
+function setupClones() {
+  slidesWrapper.innerHTML = ''; // clear current slides
+  const totalSlides = slideItems.length;
+  
+  // Clone last n slides at start
+  for (let i = totalSlides - slidesPerView; i < totalSlides; i++) {
+    const clone = slideItems[i].cloneNode(true);
+    slidesWrapper.appendChild(clone);
+  }
 
-// Set initial position
-slidesWrapper.style.transform = `translateX(-${index * (100 / slidesPerView)}%)`;
+  // Append original slides
+  slideItems.forEach(slide => slidesWrapper.appendChild(slide.cloneNode(true)));
 
-function moveToSlide() {
-  slidesWrapper.style.transition = 'transform 0.5s ease-in-out';
+  // Clone first n slides at end
+  for (let i = 0; i < slidesPerView; i++) {
+    const clone = slideItems[i].cloneNode(true);
+    slidesWrapper.appendChild(clone);
+  }
+}
+
+// Move slider to current index
+function moveToSlide(transition = true) {
+  slidesWrapper.style.transition = transition ? 'transform 0.5s ease-in-out' : 'none';
   slidesWrapper.style.transform = `translateX(-${index * (100 / slidesPerView)}%)`;
 }
 
+// Next / Prev logic
 function goNext() {
   index++;
   moveToSlide();
-
-  // Reset if we reach end
-  if (index >= totalSlides + slidesPerView) {
+  if (index >= slideItems.length + slidesPerView) {
     setTimeout(() => {
-      slidesWrapper.style.transition = 'none';
       index = slidesPerView;
-      slidesWrapper.style.transform = `translateX(-${index * (100 / slidesPerView)}%)`;
+      moveToSlide(false);
     }, 500);
   }
 }
@@ -45,52 +56,43 @@ function goNext() {
 function goPrev() {
   index--;
   moveToSlide();
-
-  // Reset if we reach beginning
   if (index < slidesPerView) {
     setTimeout(() => {
-      slidesWrapper.style.transition = 'none';
-      index = totalSlides;
-      slidesWrapper.style.transform = `translateX(-${index * (100 / slidesPerView)}%)`;
+      index = slideItems.length;
+      moveToSlide(false);
     }, 500);
   }
 }
 
-// Button listeners
-nextBtn.addEventListener('click', () => {
-  goNext();
-  restartAutoplay();
-});
-
-prevBtn.addEventListener('click', () => {
-  goPrev();
-  restartAutoplay();
-});
-
 // Autoplay
-function startAutoplay() {
-  autoplayInterval = setInterval(goNext, 3000); // every 3 seconds
-}
+function startAutoplay() { autoplayInterval = setInterval(goNext, 3000); }
+function stopAutoplay() { clearInterval(autoplayInterval); }
+function restartAutoplay() { stopAutoplay(); startAutoplay(); }
 
-function stopAutoplay() {
-  clearInterval(autoplayInterval);
-}
-
-function restartAutoplay() {
-  stopAutoplay();
+// Initialize slider
+function initSlider() {
+  slidesPerView = updateSlidesPerView();
+  setupClones();
+  index = slidesPerView;
+  moveToSlide(false);
   startAutoplay();
 }
 
-// Start autoplay on load
-startAutoplay();
+nextBtn.addEventListener('click', () => { goNext(); restartAutoplay(); });
+prevBtn.addEventListener('click', () => { goPrev(); restartAutoplay(); });
 
-// Optional: Pause autoplay on hover
+// Pause on hover
 const sliderContainer = document.querySelector('.slider-container');
 sliderContainer.addEventListener('mouseenter', stopAutoplay);
 sliderContainer.addEventListener('mouseleave', startAutoplay);
 
+// Responsive update on resize
+window.addEventListener('resize', () => {
+  initSlider(); // reinitialize slider with new slidesPerView
+});
 
-
+// Start
+initSlider();
 
 
 
@@ -149,41 +151,89 @@ video.addEventListener('ended', () => {
       navbar.classList.remove('scrolled');
     }
   });
-  // Select all elements with class "contact"
-const contactButtons = document.querySelectorAll('.contact');
+
+
+// Function to handle form submission
+function handleForm(formId) {
+  const form = document.getElementById(formId);
+  const message = form.querySelector('#formMessage') || document.createElement('div');
+  message.id = "formMessage";
+  message.style.color = "green";
+  message.style.marginTop = "10px";
+  message.style.fontWeight = "600";
+  form.appendChild(message);
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault(); // prevent default submit
+    const formData = new FormData(form);
+
+    fetch(form.action, {
+      method: 'POST',
+      body: formData,
+      headers: { 'Accept': 'application/json' }
+    }).then(response => {
+      if (response.ok) {
+        message.textContent = "Thank you! We’ll get back to you soon.";
+        message.style.display = "block";
+        form.reset();
+      } else {
+        message.textContent = "Oops! Something went wrong.";
+        message.style.color = "red";
+        message.style.display = "block";
+      }
+    }).catch(() => {
+      message.textContent = "Oops! Something went wrong.";
+      message.style.color = "red";
+      message.style.display = "block";
+    });
+  });
+}
+
+// Apply to both forms
+handleForm('contactPopupFrm');
+handleForm('contactfrm');
+const contactButtons = document.querySelectorAll('.contact'); // buttons that open popup
 const popupForm = document.getElementById('popupForm');
 const closeBtn = document.querySelector('.close-btn');
 
-// Open popup when any "contact" button is clicked
 contactButtons.forEach(btn => {
-  btn.addEventListener('click', (e) => {
-    e.preventDefault(); // prevent default behavior
+  btn.addEventListener('click', e => {
+    e.preventDefault();
     popupForm.style.display = 'flex';
   });
 });
+closeBtn.addEventListener('click', () => popupForm.style.display = 'none');
+window.addEventListener('click', e => { if(e.target === popupForm) popupForm.style.display = 'none'; });
 
-// Close popup on X click
-closeBtn.addEventListener('click', () => {
-  popupForm.style.display = 'none';
-});
-
-// Close popup on clicking outside the content
-window.addEventListener('click', (e) => {
-  if (e.target === popupForm) {
-    popupForm.style.display = 'none';
-  }
-});
-
-// Automatically open popup every 15 seconds
+// Auto popup every 15 seconds
 window.addEventListener('load', () => {
-  // Initial popup after 15 seconds
-  setTimeout(() => {
-    popupForm.style.display = 'flex';
-  }, 15000);
-
-  // Repeat every 15 seconds
-  setInterval(() => {
-    popupForm.style.display = 'flex';
-  }, 15000);
+  setTimeout(() => popupForm.style.display = 'flex', 15000);
+  setInterval(() => popupForm.style.display = 'flex', 15000);
 });
 
+// ----- Initialize intl-tel-input for all phone inputs -----
+const phoneInputs = document.querySelectorAll('.phone');
+phoneInputs.forEach(input => {
+  const iti = window.intlTelInput(input, {
+    initialCountry: "ae",
+    separateDialCode: true,
+    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js"
+  });
+
+  // Validate phone & redirect on submit
+  input.form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    // Update phone value
+    if(iti.isValidNumber()) {
+      input.value = iti.getNumber();
+    }
+
+    // Alert and redirect
+    alert("Thank you! We’ll get back to you soon.");
+    window.location.href = "thankyou.html";
+
+    // Optionally submit form to FormSubmit
+    // input.form.submit();
+  });
+});
