@@ -468,6 +468,8 @@
   <a href="https://wa.me/+918838669595" class="whatsapp" target="_blank" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
   <a href="mailto:amir@highgainrealestate.com" class="email" title="Email"><i class="fa-solid fa-envelope"></i></a>
 </div>
+
+
 <div class="bottom-banner" id="bottomBanner">
   <div class="d-flex align-items-center justify-content-between w-100 flex-wrap">
     <img src="./image/damac.png" alt="Damac" height="40" class="me-3">
@@ -494,54 +496,7 @@
 <!-- intl-tel-input JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
 
-<script>
-// ----- Popup logic -----
-const contactButtons = document.querySelectorAll('.contact'); // buttons that open popup
-const popupForm = document.getElementById('popupForm');
-const closeBtn = document.querySelector('.close-btn');
 
-contactButtons.forEach(btn => {
-  btn.addEventListener('click', e => {
-    e.preventDefault();
-    popupForm.style.display = 'flex';
-  });
-});
-closeBtn.addEventListener('click', () => popupForm.style.display = 'none');
-window.addEventListener('click', e => { if(e.target === popupForm) popupForm.style.display = 'none'; });
-
-// Auto popup every 15 seconds
-window.addEventListener('load', () => {
-  setTimeout(() => popupForm.style.display = 'flex', 15000);
-  setInterval(() => popupForm.style.display = 'flex', 15000);
-});
-
-// ----- Initialize intl-tel-input for all phone inputs -----
-const phoneInputs = document.querySelectorAll('.phone');
-phoneInputs.forEach(input => {
-  const iti = window.intlTelInput(input, {
-    initialCountry: "ae",
-    separateDialCode: true,
-    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js"
-  });
-
-  // Validate phone & redirect on submit
-  input.form.addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    // Update phone value
-    if(iti.isValidNumber()) {
-      input.value = iti.getNumber();
-    }
-
-    // Alert and redirect
-    alert("Thank you! We’ll get back to you soon.");
-    window.location.href = "thankyou.html";
-
-    // Optionally submit form to FormSubmit
-    // input.form.submit();
-  });
-});
-</script>
 
 
  <!-- Bootstrap JS -->
