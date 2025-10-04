@@ -1565,7 +1565,7 @@ video {
 .popup-image img {
   width: 100%;
   object-fit: cover;
-  filter: brightness(70%); /* 70% brightness */
+  filter: brightness(90%); /* 70% brightness */
 }
 
 
