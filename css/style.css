@@ -198,7 +198,7 @@ a.btns {
 }
 @media (max-width: 1040px) {
     .navbar-nav .nav-link {
-        font-size: 17px;
+        font-size: 15px;
         margin-left: 1px;
         margin-right: 1px;
     }
@@ -1504,6 +1504,22 @@ video {
 
 
 /* Popup Background */
+.popup-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: 600;
+  color: #000; /* adjust as needed */
+}
+
+/* Optional: reduce padding on small screens */
+@media screen and (max-width: 768px) {
+  .popup-title {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+}
+
 .popup-form {
   display: none;
   position: fixed;
@@ -1549,7 +1565,9 @@ video {
 .popup-image img {
   width: 100%;
   object-fit: cover;
+  filter: brightness(70%); /* 70% brightness */
 }
+
 
 /* Right Form */
 .popup-form-right {
@@ -1600,10 +1618,13 @@ video {
 
   .popup-image {
     height: 200px;
+
   }
 }
 
 @media screen and (max-width: 550px) {
+  
+  
   .split-popup {
     flex-direction: column;
     width: 95%;
