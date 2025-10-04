@@ -2,54 +2,62 @@ const slidesWrapper = document.querySelector('.slides');
 const slideItems = document.querySelectorAll('.slide');
 const nextBtn = document.querySelector('.next');
 const prevBtn = document.querySelector('.prev');
+const sliderContainer = document.querySelector('.slider-container');
 
+let originalSlides = [...slideItems]; // keep original slides
 let slidesPerView = updateSlidesPerView();
 let index = slidesPerView;
 let autoplayInterval;
+let autoplaySpeed = updateAutoplaySpeed();
 
-// Function to get slidesPerView based on screen width
+// Responsive slides per view
 function updateSlidesPerView() {
   if (window.innerWidth <= 600) return 1;
   if (window.innerWidth <= 992) return 2;
   return 3;
 }
 
-// Clone slides for infinite loop
+// Dynamic autoplay speed
+function updateAutoplaySpeed() {
+  // if (window.innerWidth <= 600) return 18000;
+  if (window.innerWidth <= 992) return 4000;
+  return 7000;
+}
+
+// Setup clones for infinite loop
 function setupClones() {
-  slidesWrapper.innerHTML = ''; // clear current slides
-  const totalSlides = slideItems.length;
-  
+  slidesWrapper.innerHTML = '';
+  const totalSlides = originalSlides.length;
+
   // Clone last n slides at start
   for (let i = totalSlides - slidesPerView; i < totalSlides; i++) {
-    const clone = slideItems[i].cloneNode(true);
-    slidesWrapper.appendChild(clone);
+    slidesWrapper.appendChild(originalSlides[i].cloneNode(true));
   }
 
   // Append original slides
-  slideItems.forEach(slide => slidesWrapper.appendChild(slide.cloneNode(true)));
+  originalSlides.forEach(slide => slidesWrapper.appendChild(slide.cloneNode(true)));
 
   // Clone first n slides at end
   for (let i = 0; i < slidesPerView; i++) {
-    const clone = slideItems[i].cloneNode(true);
-    slidesWrapper.appendChild(clone);
+    slidesWrapper.appendChild(originalSlides[i].cloneNode(true));
   }
 }
 
 // Move slider to current index
 function moveToSlide(transition = true) {
-slidesWrapper.style.transition = transition ? 'transform 0.8s ease-in-out' : 'none';
+  slidesWrapper.style.transition = transition ? 'transform 0.8s ease-in-out' : 'none';
   slidesWrapper.style.transform = `translateX(-${index * (100 / slidesPerView)}%)`;
 }
 
-// Next / Prev logic
+// Next / Prev
 function goNext() {
   index++;
   moveToSlide();
-  if (index >= slideItems.length + slidesPerView) {
+  if (index >= originalSlides.length + slidesPerView) {
     setTimeout(() => {
       index = slidesPerView;
       moveToSlide(false);
-    }, 500);
+    }, 800);
   }
 }
 
@@ -58,41 +66,40 @@ function goPrev() {
   moveToSlide();
   if (index < slidesPerView) {
     setTimeout(() => {
-      index = slideItems.length;
+      index = originalSlides.length;
       moveToSlide(false);
-    }, 500);
+    }, 800);
   }
 }
 
 // Autoplay
-function startAutoplay() { autoplayInterval = setInterval(goNext, 5000); } // 5s
+function startAutoplay() { autoplayInterval = setInterval(goNext, autoplaySpeed); }
 function stopAutoplay() { clearInterval(autoplayInterval); }
 function restartAutoplay() { stopAutoplay(); startAutoplay(); }
 
 // Initialize slider
 function initSlider() {
   slidesPerView = updateSlidesPerView();
+  autoplaySpeed = updateAutoplaySpeed();
   setupClones();
   index = slidesPerView;
   moveToSlide(false);
-  startAutoplay();
+  restartAutoplay();
 }
 
+// Event listeners
 nextBtn.addEventListener('click', () => { goNext(); restartAutoplay(); });
 prevBtn.addEventListener('click', () => { goPrev(); restartAutoplay(); });
 
-// Pause on hover
-const sliderContainer = document.querySelector('.slider-container');
 sliderContainer.addEventListener('mouseenter', stopAutoplay);
 sliderContainer.addEventListener('mouseleave', startAutoplay);
 
-// Responsive update on resize
-window.addEventListener('resize', () => {
-  initSlider(); // reinitialize slider with new slidesPerView
-});
+window.addEventListener('resize', () => { stopAutoplay(); initSlider(); });
 
-// Start
+// Start slider
 initSlider();
+
+
 
 
 
@@ -192,6 +199,8 @@ function handleForm(formId) {
 // Apply to both forms
 handleForm('contactPopupFrm');
 handleForm('contactfrm');
+
+
 const contactButtons = document.querySelectorAll('.contact'); // buttons that open popup
 const popupForm = document.getElementById('popupForm');
 const closeBtn = document.querySelector('.close-btn');
@@ -205,11 +214,21 @@ contactButtons.forEach(btn => {
 closeBtn.addEventListener('click', () => popupForm.style.display = 'none');
 window.addEventListener('click', e => { if(e.target === popupForm) popupForm.style.display = 'none'; });
 
-// Auto popup every 15 seconds
+// Auto popup: first after 20s, then every 7 minutes
 window.addEventListener('load', () => {
-  setTimeout(() => popupForm.style.display = 'flex', 15000);
-  setInterval(() => popupForm.style.display = 'flex', 15000);
+  const firstDelay = 5000;          // 10s (adjust as needed)
+  const repeatDelay = 7 * 60 * 1000; // 7 minutes
+
+  setTimeout(() => {
+    // Show popup first time
+    popupForm.style.display = 'flex';
+
+    // Then repeat every 7 minutes
+    setInterval(() => popupForm.style.display = 'flex', repeatDelay);
+
+  }, firstDelay);
 });
+
 
 // ----- Initialize intl-tel-input for all phone inputs -----
 const phoneInputs = document.querySelectorAll('.phone');
@@ -230,7 +249,7 @@ phoneInputs.forEach(input => {
     }
 
     // Alert and redirect
-    alert("Thank you! We’ll get back to you soon.");
+    // alert("Thank you! We’ll get back to you soon.");
     window.location.href = "thankyou.html";
 
     // Optionally submit form to FormSubmit
