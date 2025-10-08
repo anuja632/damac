@@ -159,8 +159,8 @@ video.addEventListener('ended', () => {
     }
   });
 
-
-// Function to handle form submission
+  
+// -------- Handle Form Submission with Validation --------
 function handleForm(formId) {
   const form = document.getElementById(formId);
   const message = form.querySelector('#formMessage') || document.createElement('div');
@@ -168,31 +168,92 @@ function handleForm(formId) {
   message.style.color = "green";
   message.style.marginTop = "10px";
   message.style.fontWeight = "600";
+  message.style.display = "none";
   form.appendChild(message);
 
-  form.addEventListener('submit', function(e) {
-    e.preventDefault(); // prevent default submit
+  // Find phone input in this form
+  const phoneInput = form.querySelector('.phone');
+  let iti;
+  if (phoneInput) {
+    iti = window.intlTelInput(phoneInput, {
+      initialCountry: "ae",
+      separateDialCode: true,
+      utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js"
+    });
+  }
+
+  // Create error message for phone
+  const errorMsg = document.createElement("div");
+  errorMsg.style.color = "red";
+  errorMsg.style.fontSize = "13px";
+  errorMsg.style.marginTop = "5px";
+  errorMsg.style.display = "none";
+  phoneInput.insertAdjacentElement("afterend", errorMsg);
+
+  // Form submission
+  form.addEventListener('submit', function (e) {
+    e.preventDefault(); // always prevent default first
+
+    let countryName = '';
+    if (phoneInput && iti) {
+      const countryData = iti.getSelectedCountryData();
+      const fullNumber = iti.getNumber();
+      const dialCode = "+" + countryData.dialCode;
+      countryName = countryData.name; // ✅ country name
+
+      // reset styles
+      phoneInput.style.borderColor = "";
+      errorMsg.style.display = "none";
+      message.style.display = "none";
+
+      // validation
+      if (!iti.isValidNumber() || !fullNumber.startsWith(dialCode)) {
+        phoneInput.style.borderColor = "red";
+        errorMsg.textContent = "Please enter a valid phone number.";
+        errorMsg.style.display = "block";
+        return false; // ❌ stop form submission
+      }
+
+      // ✅ valid number
+      phoneInput.value = fullNumber;
+    }
+
+    // --- SEND FORM VIA FETCH ---
     const formData = new FormData(form);
+    // Add country name to form data
+    formData.append('country_name', countryName);
 
     fetch(form.action, {
       method: 'POST',
       body: formData,
       headers: { 'Accept': 'application/json' }
-    }).then(response => {
-      if (response.ok) {
-        message.textContent = "Thank you! We’ll get back to you soon.";
-        message.style.display = "block";
-        form.reset();
-      } else {
+    })
+      .then(response => {
+        if (response.ok) {
+          message.textContent = "Thank you! We’ll get back to you soon.";
+          message.style.color = "green";
+          message.style.display = "block";
+          form.reset();
+              // Redirect manually
+    const nextPage = form.querySelector('input[name="_next"]').value;
+    window.location.href = nextPage;
+        } else {
+          message.textContent = "Oops! Something went wrong.";
+          message.style.color = "red";
+          message.style.display = "block";
+        }
+      })
+      .catch(() => {
         message.textContent = "Oops! Something went wrong.";
         message.style.color = "red";
         message.style.display = "block";
-      }
-    }).catch(() => {
-      message.textContent = "Oops! Something went wrong.";
-      message.style.color = "red";
-      message.style.display = "block";
-    });
+      });
+  });
+
+  // Clear phone error when typing
+  phoneInput.addEventListener('input', () => {
+    phoneInput.style.borderColor = "";
+    errorMsg.style.display = "none";
   });
 }
 
@@ -200,8 +261,8 @@ function handleForm(formId) {
 handleForm('contactPopupFrm');
 handleForm('contactfrm');
 
-
-const contactButtons = document.querySelectorAll('.contact'); // buttons that open popup
+// -------- Popup Behaviour --------
+const contactButtons = document.querySelectorAll('.contact');
 const popupForm = document.getElementById('popupForm');
 const closeBtn = document.querySelector('.close-btn');
 
@@ -211,48 +272,19 @@ contactButtons.forEach(btn => {
     popupForm.style.display = 'flex';
   });
 });
+
 closeBtn.addEventListener('click', () => popupForm.style.display = 'none');
-window.addEventListener('click', e => { if(e.target === popupForm) popupForm.style.display = 'none'; });
-
-// Auto popup: first after 20s, then every 7 minutes
-window.addEventListener('load', () => {
-  const firstDelay = 5000;          // 10s (adjust as needed)
-  const repeatDelay = 7 * 60 * 1000; // 7 minutes
-
-  setTimeout(() => {
-    // Show popup first time
-    popupForm.style.display = 'flex';
-
-    // Then repeat every 7 minutes
-    setInterval(() => popupForm.style.display = 'flex', repeatDelay);
-
-  }, firstDelay);
+window.addEventListener('click', e => {
+  if (e.target === popupForm) popupForm.style.display = 'none';
 });
 
+// -------- Auto Popup --------
+window.addEventListener('load', () => {
+  const firstDelay = 5000;          // 5s
+  const repeatDelay = 7 * 60 * 1000; // 7 min
 
-// ----- Initialize intl-tel-input for all phone inputs -----
-const phoneInputs = document.querySelectorAll('.phone');
-phoneInputs.forEach(input => {
-  const iti = window.intlTelInput(input, {
-    initialCountry: "ae",
-    separateDialCode: true,
-    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js"
-  });
-
-  // Validate phone & redirect on submit
-  input.form.addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    // Update phone value
-    if(iti.isValidNumber()) {
-      input.value = iti.getNumber();
-    }
-
-    // Alert and redirect
-    // alert("Thank you! We’ll get back to you soon.");
-    window.location.href = "thankyou.html";
-
-    // Optionally submit form to FormSubmit
-    // input.form.submit();
-  });
+  setTimeout(() => {
+    popupForm.style.display = 'flex';
+    setInterval(() => popupForm.style.display = 'flex', repeatDelay);
+  }, firstDelay);
 });
