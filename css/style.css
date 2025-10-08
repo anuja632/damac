@@ -1104,11 +1104,14 @@ video {
 .form-control::placeholder {
   color: #fff;
 }
-.form-control:hover {
-  background-color: #fff;
-  color: #000 !important; /* make text black */
-  border-color: #000; /* optional, for visible border */
+/* On focus */
+
+ #BookConsultation .form-control:focus {
+  background-color: transparent !important;
+
 }
+
+
 
 
 /* Submit Button */
